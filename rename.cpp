@@ -12,19 +12,20 @@ using namespace std;
 
 static unsigned int countRegPics = 0;
 string SaveName;
-char oldImageName[50];
-char mvCommand[100];
+char oldImageName[500];
+char oldImageNameTmp[500];
+char mvCommand[1000];
 const char *saveNameTmp;
-char dirnameToSave[50];
+char dirnameToSave[500];
 char dataHeader[50];
 string dataHeaderString;
 
 void listAllImageFilesToReg(const char *dirname)  
 {  
-    char fileNameTmp[50];
-    char readPicName[50];
+    char fileNameTmp[500];
+    char readPicName[500];
 
-    static char dirNameTmp[50];
+    static char dirNameTmp[500];
     int i, size;
 
     assert(dirname != NULL);  
@@ -48,7 +49,7 @@ void listAllImageFilesToReg(const char *dirname)
         size = strlen(filename->d_name);
         for(i = 0; i < size; i++)
         {
-            fileNameTmp[i] = *(filename->d_name + i) ;
+            fileNameTmp[i] = *(filename->d_name + i);
         }
         fileNameTmp[i] = '\0';
         sprintf(path,"%s/%s",dirname,filename->d_name);
@@ -79,7 +80,9 @@ void listAllImageFilesToReg(const char *dirname)
             // printf("saveNameTmp: %s\n", saveNameTmp);
             sprintf(oldImageName, "%s/%s/%s", dirnameToSave, dirNameTmp, fileNameTmp);
             // printf("oldImageName:%s\n", oldImageName);
-            sprintf(mvCommand, "mv %s %s", oldImageName , saveNameTmp);
+            sprintf(oldImageNameTmp,"%s%s%s","\"",oldImageName,"\"");
+            printf("oldImageNameTmp: %s\n", oldImageNameTmp);
+            sprintf(mvCommand, "mv %s %s", oldImageNameTmp , saveNameTmp);
             printf("mvCommand :%s\n", mvCommand);
             system(mvCommand);
         }
